@@ -214,6 +214,12 @@ const char * jstate2string(enum Jobstate s)
         case HOLDING_CLIENT:
             jobstate = "skipped";
             break;
+        /* default should never happen
+           introduced only to avoid gcc warnings
+           about unhandled enums */
+        default:
+            jobstate = "unknown";
+            break;
     }
     return jobstate;
 }
