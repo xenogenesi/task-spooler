@@ -1,0 +1,24 @@
+This is a fork of `ts` (task spooler by Lluís Batlle i Rossell)
+
+The purpose of this fork is only to add GNU/Autotools support
+and some helper to build packages (Debian and homebrew)
+not to modify or add features to the program.
+
+If you experience any problem with the binaries generated
+from this fork please try also the mainstream, if the problem
+is only in the fork feel free to contact me.
+
+Alex <raziel@eml.cc>
+
+note: some outdated docs and files not useful to the build
+      have been moved into a directory legacy/
+      this directory will be updated according to the mainstram
+      but isn't included with distributed packages
+      if you need some look into the fork repository
+
+ts - Task Spooler
+fork repository: https://github.com/xenogenesi/task-spooler
+mainstream homepage: http://vicerveza.homeunix.net/~viric/soft/ts/
+http://vicerveza.homeunix.net/~viric/soft/ts/ts-0.7.4.tar.gz
+2539bfc931988edc56d7564ad02bab9c
+

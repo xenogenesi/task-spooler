@@ -1,0 +1,26 @@
+The package should support common autotools commands:
+
+# ex: build into a different directory
+mkdir build
+cd build
+../configure --prefix=/tmp/ts-install
+make install
+#make uninstall
+
+# get variables from environment
+CC=cc CFLAGS=-O0 ./configure
+make
+
+# ex: create a dist tar.gz
+make dist
+
+# ex: check the dist work as expected
+make distcheck
+
+**Note**
+If something wrong with the configure script or auto-generated files provided
+use the autogen.sh script (autoreconf and other autotools are needed installed)
+
+../autogen.sh --prefix=/tmp/ts-install
+# the configure, Makefile.in and other autotools files are re-generated
+
