@@ -1,0 +1,12 @@
+ts for Debian
+-------------
+
+The only difference with the mainstream package is that this version
+is compiled by default with -O2 instead of -O0 (may be changed setting
+env CFLAGS=-O0 at configure time.
+
+
+Please if you experience problems using this package contact me,
+(the maintainer of this Debian package, not the author of the program.
+
+ -- Alex <raziel@eml.cc>  Tue, 23 Sep 2014 12:22:44 +0200

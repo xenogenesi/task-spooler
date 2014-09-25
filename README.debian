@@ -1,0 +1,11 @@
+Note: currently this package conflict with moreutils because
+      of the executable name `ts` installed in the same path
+      no Debian policies about packages relationships has
+      been declared yet in debian/control
+      in future releases the executable may be renamed.
+
+To build the binary Debian package, cd into sources directory:
+fakeroot debian/rules binary
+should create ../ts_0.7.4-1_i386.deb, install with:
+sudo dpkg -i ../ts_0.7.4-1_i386.deb
+
