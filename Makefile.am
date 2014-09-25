@@ -21,6 +21,5 @@ EXTRA_DIST += debian/source \
 	debian/copyright \
 	debian/control \
 	debian/rules \
-	debian/docs \
-	debian/Makefile.am
+	debian/docs
 
