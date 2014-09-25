@@ -1,0 +1,14 @@
+http://brew.sh
+
+notice: at the time of writing it compile and install but doesn't run
+"The server didn't come up."
+Mavericks 10.9.5 XCode 6.0.1 6A317
+Apple LLVM version 6.0 (clang-600.0.51) (based on LLVM 3.5svn)
+Target: x86_64-apple-darwin13.4.0
+Thread model: posix
+
+cp ts.rb /usr/local/Library/Formula/
+brew install ts
+
+notice: there's already an official brew formula called 'task-spooler'
+

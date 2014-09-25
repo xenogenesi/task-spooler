@@ -23,3 +23,5 @@ EXTRA_DIST += debian/source \
 	debian/rules \
 	debian/docs
 
+EXTRA_DIST += README.brew \
+	ts.rb

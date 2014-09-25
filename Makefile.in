@@ -292,7 +292,8 @@ EXTRA_DIST = autogen.sh testbench.sh README.autotools README.debian \
 	Changelog README README.md TRICKS COPYING README.1st \
 	debian/source debian/source/format debian/changelog \
 	debian/compat debian/README.Debian debian/README.source \
-	debian/copyright debian/control debian/rules debian/docs
+	debian/copyright debian/control debian/rules debian/docs \
+	README.brew ts.rb
 all: all-recursive
 
 .SUFFIXES:
