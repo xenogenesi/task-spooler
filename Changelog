@@ -11,6 +11,10 @@ Doubtful tasks:
 Future:
  - Use a better system than mkstemp() for finding output files, so we can add
    .gz to the gzipped outputs.
+v1.0:
+ - Respect TMPDIR for output files.
+v0.7.6:
+ - Add -k (send SIGTERM to process group). Replacement for "kill -- -`ts -p`".
 v0.7.4:
  - Fixing a bug about dangling processes, in case of using "ts -r".
 v0.7.3:

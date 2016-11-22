@@ -25,8 +25,8 @@ int server_socket;
 static char getopt_env[] = "POSIXLY_CORRECT=YES";
 static char *old_getopt_env;
 
-static char version[] = "Task Spooler v0.7.4 - a task queue system for the unix user.\n"
-"Copyright (C) 2007-2013  Lluis Batlle i Rossell";
+static char version[] = "Task Spooler v1.0 - a task queue system for the unix user.\n"
+"Copyright (C) 2007-2016  Lluis Batlle i Rossell";
 
 
 static void default_command_line()
@@ -84,7 +84,7 @@ void parse_opts(int argc, char **argv)
 
     /* Parse options */
     while(1) {
-        c = getopt(argc, argv, ":VhKgClnfmBEr:t:c:o:p:w:u:s:U:i:N:L:dS:D:");
+        c = getopt(argc, argv, ":VhKgClnfmBEr:t:c:o:p:w:k:u:s:U:i:N:L:dS:D:");
 
         if (c == -1)
             break;
@@ -94,6 +94,10 @@ void parse_opts(int argc, char **argv)
             case 'K':
                 command_line.request = c_KILL_SERVER;
                 command_line.should_go_background = 0;
+                break;
+            case 'k':
+                command_line.request = c_KILL_JOB;
+                command_line.jobid = atoi(optarg);
                 break;
             case 'l':
                 command_line.request = c_LIST;
@@ -246,6 +250,10 @@ void parse_opts(int argc, char **argv)
                         command_line.jobid = -1; /* This means the 'last'
                                                     added job */
                         break;
+                    case 'k':
+                        command_line.request = c_KILL_JOB;
+                        command_line.jobid = -1; /* This means the 'last' job */
+                        break;
                     case 'S':
                         command_line.request = c_GET_MAX_SLOTS;
                         break;
@@ -351,6 +359,7 @@ static void print_help(const char *cmd)
     printf("  -s [id]  show the job state. Of the last added, if not specified.\n");
     printf("  -r [id]  remove a job. The last added, if not specified.\n");
     printf("  -w [id]  wait for a job. The last added, if not specified.\n");
+    printf("  -k [id]  send SIGTERM to the job process group. The last run, if not specified.\n");
     printf("  -u [id]  put that job first. The last added, if not specified.\n");
     printf("  -U <id-id>  swap two jobs in the queue.\n");
     printf("  -B       in case of full queue on the server, quit (2) instead of waiting.\n");
@@ -478,6 +487,11 @@ int main(int argc, char **argv)
         if (!command_line.need_server)
             error("The command %i needs the server", command_line.request);
         c_show_pid();
+        break;
+    case c_KILL_JOB:
+        if (!command_line.need_server)
+            error("The command %i needs the server", command_line.request);
+        c_kill_job();
         break;
     case c_INFO:
         if (!command_line.need_server)

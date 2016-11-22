@@ -1,4 +1,4 @@
-AC_INIT([ts], [0.7.4])
+AC_INIT([ts], [1.0])
 AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_AUX_DIR([build-aux])
 

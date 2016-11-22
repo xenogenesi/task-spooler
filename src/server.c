@@ -179,7 +179,8 @@ void server_main(int notify_fd, char *_path)
     path = _path;
 
     /* Move the server to the socket directory */
-    dirpath = strdup(path);
+    dirpath = malloc(strlen(path)+1);
+    strcpy(dirpath, path);
     chdir(dirname(dirpath));
     free(dirpath);
 

@@ -33,7 +33,7 @@ To build the Debian binary package:
     fakeroot debian/rules binary
 the package will be created in `../`, install it with:
      
-     sudo dpkg -i ../ts_0.7.4-1_i386.deb # i386 is an example your arch may differ
+     sudo dpkg -i ../ts_1.0-1_i386.deb # i386 is an example your arch may differ
 
 **Brew** (Mac OS X)
 

@@ -6,6 +6,6 @@ Note: currently this package conflict with moreutils because
 
 To build the binary Debian package, cd into sources directory:
 fakeroot debian/rules binary
-should create ../ts_0.7.4-1_i386.deb, install with:
-sudo dpkg -i ../ts_0.7.4-1_i386.deb
+should create ../ts_1.0-1_i386.deb, install with:
+sudo dpkg -i ../ts_1.0-1_i386.deb
 

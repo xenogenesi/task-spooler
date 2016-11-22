@@ -11,6 +11,7 @@
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <sys/time.h>
+#include <signal.h>
 #include "main.h"
 
 static void c_end_of_job(const struct Result *res);
@@ -412,6 +413,22 @@ void c_show_pid()
     /* This will exit if there is any error */
     get_output_file(&pid);
     printf("%i\n", pid);
+}
+
+void c_kill_job()
+{
+    int pid = 0;
+    /* This will exit if there is any error */
+    get_output_file(&pid);
+
+    if (pid == -1 || pid == 0)
+    {
+        fprintf(stderr, "Error: strange PID received: %i\n", pid);
+        exit(-1);
+    }
+
+    /* Send SIGTERM to the process group, as pid is for process group */
+    kill(-pid, SIGTERM);
 }
 
 void c_remove_job()

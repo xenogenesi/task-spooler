@@ -5,7 +5,7 @@
 .\" that should have been distributed together with this file.
 .\" 
 .\" Note: I took the gnu 'ls' man page as an example.
-.TH TS 1 2012-05 "Task Spooler 0.7.4"
+.TH TS 1 2016-03 "Task Spooler 1.0"
 .SH NAME
 ts \- task spooler. A simple unix batch system
 .SH SYNOPSIS
@@ -20,6 +20,7 @@ Actions:
 .BI "[\-s ["id ]]
 .BI "[\-r ["id ]]
 .BI "[\-w ["id ]]
+.BI "[\-k ["id ]]
 .BI "[\-u ["id ]]
 .BI "[\-i ["id ]]
 .BI "[\-U <"id - id >]
@@ -159,6 +160,12 @@ Remove the named job, or the last in the queue.
 .TP
 .B "\-w [id]"
 Wait for the named job, or for the last in the queue.
+.TP
+.B "\-k [id]"
+Kill the process group of the named job (SIGTERM),
+or the last running/run job if not specified.
+Equivalent to
+.B kill -- -`ts -p`
 .TP
 .B "\-u [id]"
 Make the named job (or the last in the queue) urgent - this means that it goes
@@ -307,7 +314,7 @@ Lluis Batlle i Rossell
 .SH NOTES
 This page describes
 .B ts
-as in version 0.7.4. Other versions may differ. The file
+as in version 1.0. Other versions may differ. The file
 .B TRICKS
 found in the distribution package can show some ideas on special uses of
 .B ts.

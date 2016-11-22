@@ -40,7 +40,7 @@ static int fork_command(const char *command)
             if (p[1] != 1 && p[1] != 2)
                 close(p[1]);
             close(p[0]);
-            execlp("/bin/sh", "/bin/sh", "-c", command, 0);
+            execlp("/bin/sh", "/bin/sh", "-c", command, (char*)NULL);
             error("/bin/sh exec error");
         case -1:
             error("Fork error");

@@ -74,12 +74,16 @@ static FILE * open_error_file()
 
     fd = open(new_path, O_CREAT | O_APPEND | O_WRONLY, 0600);
     if (fd == -1)
+    {
+        free(new_path);
         return 0;
+    }
 
     out = fdopen(fd, "a");
     if (out == NULL)
     {
         close(fd);
+        free(new_path);
         return 0;
     }
 
