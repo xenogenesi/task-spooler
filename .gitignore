@@ -1,0 +1,11 @@
+/Makefile
+/autom4te.cache/
+/config.log
+/config.status
+/src/.deps/
+/src/Makefile
+/src/config.h
+/src/config.h.in~
+/src/stamp-h1
+/src/*.o
+/src/ts
