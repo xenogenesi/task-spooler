@@ -166,9 +166,17 @@ static void run_child(int fd_send_filename)
             tmpdir = "/tmp";
         lname = strlen(tmpdir) + strlen(outfname) + 1 /* \0 */;
 
-        outfname_full = (char *)malloc(lname);
-        strcpy(outfname_full, tmpdir);
-        strcat(outfname_full, outfname);
+        if(command_line.output_filename != NULL)
+        {
+            outfname_full = (char *)malloc(strlen(command_line.output_filename));
+            strcpy(outfname_full, command_line.output_filename);
+        }
+        else{
+            outfname_full = (char *)malloc(lname);
+            strcpy(outfname_full, tmpdir);
+            strcat(outfname_full, outfname);
+        }
+
 
         if (command_line.gzip)
         {
@@ -215,7 +223,10 @@ static void run_child(int fd_send_filename)
         else
         {
             /* Prepare the filename */
-            outfd = mkstemp(outfname_full); /* stdout */
+            if(command_line.output_filename != NULL)
+                outfd = creat(outfname_full, S_IRUSR|S_IWUSR|S_IRGRP); /* stdout */
+            else
+                outfd = mkstemp(outfname_full); /* stdout */
             dup2(outfd, 1); /* stdout */
             if (command_line.stderr_apart)
             {
