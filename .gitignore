@@ -10,3 +10,8 @@
 /src/*.o
 /src/ts
 /.idea/
+/Makefile.in
+/aclocal.m4
+/build-aux/
+/configure
+/src/Makefile.in
