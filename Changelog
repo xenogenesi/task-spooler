@@ -11,6 +11,10 @@ Doubtful tasks:
 Future:
  - Use a better system than mkstemp() for finding output files, so we can add
    .gz to the gzipped outputs.
+v1.0.2:
+ - Fix race at server start
+v1.0.1:
+ - Fix possible buffer overflow (Alexander Inyukhin)
 v1.0:
  - Respect TMPDIR for output files.
 v0.7.6:

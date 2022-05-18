@@ -23,7 +23,7 @@ extern int server_socket;
 static char *socket_path;
 static int should_check_owner = 0;
 
-static int fork_server();
+static int fork_server(int ls);
 
 void create_socket_path(char **path)
 {
@@ -71,8 +71,11 @@ int try_connect(int s)
     struct sockaddr_un addr;
     int res;
 
+    memset(&addr, 0, sizeof(addr));
     addr.sun_family = AF_UNIX;
-    strcpy(addr.sun_path, socket_path);
+    strncpy(addr.sun_path, socket_path, sizeof(addr.sun_path) - 1);
+    if (strcmp(socket_path, addr.sun_path))
+        error("Cannot create the socket '%s'. Probably, the name is too long.", socket_path);
 
     res = connect(s, (struct sockaddr *) &addr, sizeof(addr));
 
@@ -106,7 +109,7 @@ void wait_server_up(int fd)
 }
 
 /* Returns the fd where to wait for the parent notification */
-static int fork_server()
+static int fork_server(int ls)
 {
     int pid;
     int p[2];
@@ -125,12 +128,13 @@ static int fork_server()
             close(1);
             close(2);
             setsid();
-            server_main(p[1], socket_path);
+            server_main(p[1], socket_path, ls);
             exit(0);
             break;
         case -1: /* Error */
             return -1;
         default: /* Parent */
+            close(ls);
             close(p[1]);
     }
     /* Return the read fd */
@@ -144,10 +148,57 @@ void notify_parent(int fd)
     close(fd);
 }
 
+static int is_path_unixsocket(const char *path)
+{
+    int res;
+    struct stat socketstat;
+
+    res = stat(path, &socketstat);
+
+    if (res == 0 && S_ISSOCK(socketstat.st_mode))
+        return 1;
+
+    return 0;
+}
+
+static int open_server_socket()
+{
+    int res;
+    int ls;
+    struct sockaddr_un addr;
+
+    ls = socket(AF_UNIX, SOCK_STREAM, 0);
+    if(ls == -1)
+        error("cannot create the listen socket in the server");
+
+    addr.sun_family = AF_UNIX;
+    strcpy(addr.sun_path, socket_path);
+
+    res = bind(ls, (struct sockaddr *) &addr, sizeof(addr));
+    if (res == -1)
+    {
+        warning("Error binding.");
+        close(ls);
+        return -1;
+    }
+
+    res = listen(ls, 0);
+    if (res == -1)
+    {
+        /* If bind succeeded, can this fail? */
+        warning("Error listening.");
+        close(ls);
+        return -1;
+    }
+
+    return ls;
+}
+
 int ensure_server_up()
 {
     int res;
     int notify_fd;
+    int server_bind_fd = -1;
 
     server_socket = socket(AF_UNIX, SOCK_STREAM, 0);
     if (server_socket == -1)
@@ -166,14 +217,28 @@ int ensure_server_up()
 
     /* If error other than "No one listens on the other end"... */
     if (!(errno == ENOENT || errno == ECONNREFUSED))
-        error("c: cannot connect to the server");
+        error("c: cannot connect to the server at '%s': %s",
+                socket_path, strerror(errno));
 
     if (errno == ECONNREFUSED)
-        unlink(socket_path);
+    {
+        if (!is_path_unixsocket(socket_path))
+            error("The socket path exists and it is not a unix socket: %s",
+                    socket_path);
 
-    /* Try starting the server */
-    notify_fd = fork_server();
+        unlink(socket_path);
+    }
+
+    /* Try to start a server. It may fail if multiple clients try to do this at oncei. */
+    server_bind_fd = open_server_socket();
+    if (server_bind_fd != -1)
+    {
+        /* If it worked, wait for server to start. Otherwise, repeat connect */
+        notify_fd = fork_server(server_bind_fd);
     wait_server_up(notify_fd);
+    }
+
+    /* Connect after either server start or reattempt because of clash at start */
     res = try_connect(server_socket);
 
     /* The second time didn't work. Abort. */
@@ -182,6 +247,8 @@ int ensure_server_up()
         fprintf(stderr, "The server didn't come up.\n");
         exit(-1);
     }
+
+    try_check_ownership();
 
     free(socket_path);
 

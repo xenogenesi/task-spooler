@@ -162,11 +162,8 @@ static int get_max_descriptors()
     return max;
 }
 
-void server_main(int notify_fd, char *_path)
+void server_main(int notify_fd, char *_path, int ls)
 {
-    int ls;
-    struct sockaddr_un addr;
-    int res;
     char *dirpath;
 
     process_type = SERVER;
@@ -185,21 +182,6 @@ void server_main(int notify_fd, char *_path)
     free(dirpath);
 
     nconnections = 0;
-
-    ls = socket(AF_UNIX, SOCK_STREAM, 0);
-    if(ls == -1)
-        error("cannot create the listen socket in the server");
-
-    addr.sun_family = AF_UNIX;
-    strcpy(addr.sun_path, path);
-
-    res = bind(ls, (struct sockaddr *) &addr, sizeof(addr));
-    if (res == -1)
-        error("Error binding.");
-
-    res = listen(ls, 0);
-    if (res == -1)
-        error("Error listening.");
 
     install_sigterm_handler();
 

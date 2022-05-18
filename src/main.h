@@ -253,7 +253,7 @@ int job_is_holding_client(int jobid);
 int wake_hold_client();
 
 /* server.c */
-void server_main(int notify_fd, char *_path);
+void server_main(int notify_fd, char *_path, int ls);
 void dump_conns_struct(FILE *out);
 
 /* server_start.c */

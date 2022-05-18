@@ -8,6 +8,29 @@
 <body>
 <h1>Task Spooler</h1>
 
+<script type="text/javascript">
+/* <![CDATA[ */
+    (function() {
+        var s = document.createElement('script'), t = document.getElementsByTagName('script')[0];
+        s.type = 'text/javascript';
+        s.async = true;
+        s.src = 'http://api.flattr.com/js/0.6/load.js?mode=auto';
+        t.parentNode.insertBefore(s, t);
+    })();
+/* ]]> */</script>
+<a class="FlattrButton" style="display:none;"
+    href="http://viric.name/soft/ts" title="Task Spooler"
+    rel="flattr;uid:viric;category:text;tags:batch,unix;button:compact;">
+task spooler is a Unix batch system where the tasks spooled run one after the
+other. The amount of jobs to run at once can be set at any time. Each user in
+each system has his own job queue. The tasks are run in the correct context
+(that of enqueue) from any shell/process, and its output/results can be easily
+watched. It is very useful when you know that your commands depend on a lot of
+RAM, a lot of disk use, give a lot of output, or for whatever reason it's better
+not to run them all at the same time, while you want to keep your resources busy
+for maximum benfit. Its interface allows using it easily in scripts.
+</a>
+
 <p>
 <em>As in <a
 href="http://freshmeat.net/projects/taskspooler/">freshmeat.net</a>: </em>
@@ -24,7 +47,7 @@ for maximum benfit. Its interface allows using it easily in scripts.
 </blockquote>
 
 <p>For your first contact, you can read an article at <em>linux.com</em>,
-which I like <a href="article_linux_com">as overview, guide and examples</a>
+which I like <a href="article_linux_com.html">as overview, guide and examples</a>
 <a href="http://www.linux.com/feature/143901">(original url)</a>.
 On more advanced usage, don't neglect the TRICKS file in the package.</p>
 
@@ -44,8 +67,8 @@ running batch jobs in my linux computer. I wanted to:</p>
 <p>At the end, after some time using and developing <kbd>ts</kbd>,
 it can do something more:
 <ul>
-<li>It works in GNU systems with the GNU c compiler (Linux, Darwin, Cygwin,
-FreeBSD, etc).
+<li>It works in most systems I use and some others, like GNU/Linux, Darwin,
+Cygwin, and FreeBSD.
 <li>No configuration at all for a simple queue.
 <li>Good integration with renice, kill, etc. (through <kbd>`ts -p`</kbd> and
 process groups).
@@ -94,11 +117,11 @@ when a job finishes, where does the job output go to, etc.</p>
 <h2>Download</h2>
 
 <p>Download the latest version (GPLv2+ licensed):
-<a href="ts-0.7.1.tar.gz">ts-0.7.2.tar.gz</a> - v0.7.2 -
+<a href="ts-1.0.1.tar.gz">ts-1.0.1.tar.gz</a> - v1.0.1 (2020-12-12) -
 <a href="Changelog">Changelog</a></p>
 
 <p>Look at the
-<a href="/~mercurial/cgi-bin/hgwebdir.cgi/ts">version repository</a> if you are
+<a href="../../wsgi-bin/hgweb.wsgi/ts">version repository</a> if you are
 interested in its development.</p>
 
 <p>Андрей Пантюхин (Andrew Pantyukhin) maintains the
@@ -115,12 +138,20 @@ Project Sunrise</a> already has also an ebuild
 for <code>ts</code>.</p>
 
 <p>Alexander V. Inyukhin maintains <a
-href="http://grid.pp.ru/debian/pool/contrib/t/task-spooler/">unofficial debian
-packages</a> for several platforms.</p>
+href="http://anonscm.debian.org/gitweb/?p=collab-maint/task-spooler.git">unofficial debian
+packages</a> for several platforms. Find the official packages in the
+<a href="http://packages.debian.org/sid/task-spooler">debian package system</a>.</p>
 
 <p>Pascal Bleser packed the program for SuSE and openSuSE in <a
 href="http://packman.links2linux.de/package/ts/">RPMs for various
 platforms</a>.</p>
+
+<p>Gnomeye maintains the <a
+href="https://aur.archlinux.org/packages/ts-spooler/">AUR package</a>.</p>
+
+<p>Eric Keller wrote a nodejs web server showing the status of the task
+spooler queue (<a href="https://github.com/roche/tsp-web">github
+project</a>).</p>
 
 <h2>Manual</h2>
 <p>Look at its <a href="man_ts.html">manpage</a> (v0.6.1).
@@ -176,6 +207,6 @@ multislot version of ts.
 </ul>
 
 <address>Author:
-<a href="http://vicerveza.homeunix.net/~viric/">Lluís Batlle i Rossell</a>,
-viric_at_vicerveza_dot_homeunix_dot_net</address>
+<a href="http://viric.name/">Lluís Batlle i Rossell</a>,
+viric_at_viric_dot_name</address>
 </body>

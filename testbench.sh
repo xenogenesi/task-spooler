@@ -149,3 +149,16 @@ if [ $? -ne 0 ]; then
 fi
 
 ./ts -K
+
+# Test twice jobs + 2 dependency
+./ts -S 2
+J1=`./ts sleep 1`
+J2=`./ts sleep 1`
+ts -D $J1 ls xxxx
+J3=`ts -D $J1 sleep 1`
+ts -D $J2 ls xxxx
+J4=`ts -D $J2 sleep 1`
+ts -w $J3 || echo Error twice jobs 1
+ts -w $J4 || echo Error twice jobs 2
+
+./ts -K
