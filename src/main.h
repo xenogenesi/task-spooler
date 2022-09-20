@@ -89,6 +89,7 @@ struct Command_line {
     } command;
     char *label;
     int num_slots; /* Slots for the job to use. Default 1 */
+    char *output_filename; /* output filename to use instead temporary files */
 };
 
 enum Process_type {
